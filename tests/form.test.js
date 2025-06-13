@@ -9,6 +9,7 @@ describe('Formulario de Registro', () => {
       </form>
     `;
     require('../script.js');
+    document.dispatchEvent(new Event('DOMContentLoaded'));
   });
 
   test('Muestra mensaje de éxito si se llenan todos los campos', () => {
