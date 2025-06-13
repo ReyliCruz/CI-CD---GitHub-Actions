@@ -1,18 +1,23 @@
-document.getElementById('registerForm').addEventListener('submit', function (e) {
-  e.preventDefault();
+document.addEventListener('DOMContentLoaded', function () {
+  const form = document.getElementById('registerForm');
+  if (!form) return;
 
-  const name = document.getElementById('name').value;
-  const email = document.getElementById('email').value;
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
 
-  console.log("Formulario enviado");
-  console.log("Nombre:", name);
-  console.log("Correo:", email);
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
 
-  if (name && email) {
-    document.getElementById('message').textContent = `Gracias por registrarte, ${name}.`;
-    console.log("Registro exitoso");
-  } else {
-    document.getElementById('message').textContent = 'Por favor llena todos los campos.';
-    console.warn("Formulario incompleto");
-  }
+    console.log("Formulario enviado");
+    console.log("Nombre:", name);
+    console.log("Correo:", email);
+
+    if (name && email) {
+      document.getElementById('message').textContent = `Gracias por registrarte, ${name}.`;
+      console.log("Registro exitoso");
+    } else {
+      document.getElementById('message').textContent = 'Por favor llena todos los campos.';
+      console.warn("Formulario incompleto");
+    }
+  });
 });
