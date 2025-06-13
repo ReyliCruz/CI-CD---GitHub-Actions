@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
 
 permissions:
   contents: read
@@ -11,14 +14,14 @@ permissions:
   id-token: write
 
 jobs:
-  build:
+  build-and-test:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repositorio
         uses: actions/checkout@v3
 
-      - name: Setup Node.js
+      - name: Instalar Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
@@ -28,13 +31,13 @@ jobs:
           npm install
           npm test
 
-      - name: Subir archivos para GitHub Pages
+      - name: Subir artefacto para GitHub Pages
         uses: actions/upload-pages-artifact@v1
         with:
           path: .
 
   deploy:
-    needs: build
+    needs: build-and-test
     runs-on: ubuntu-latest
     environment:
       name: github-pages
