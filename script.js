@@ -1,37 +1,32 @@
-describe('Formulario de Registro', () => {
-  beforeEach(() => {
-    document.body.innerHTML = `
-      <form id="registerForm">
-        <input type="text" id="name" />
-        <input type="email" id="email" />
-        <button type="submit">Registrarse</button>
-        <p id="message"></p>
-      </form>
-    `;
+document.addEventListener('DOMContentLoaded', function () {
+  console.log('DOM cargado correctamente ✅');
 
-    require('../script.js');
-    document.dispatchEvent(new Event('DOMContentLoaded'));
-  });
+  const form = document.getElementById('registerForm');
+  if (!form) {
+    console.warn('Formulario no encontrado ❌');
+    return;
+  }
 
-  test('Muestra mensaje de éxito si se llenan todos los campos', () => {
-    document.getElementById('name').value = 'Juan';
-    document.getElementById('email').value = 'juan@example.com';
+  console.log('Formulario encontrado 🧾');
 
-    document.getElementById('registerForm')
-      .dispatchEvent(new Event('submit', { bubbles: true }));
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
 
-    expect(document.getElementById('message').textContent)
-      .toBe('Gracias por registrarte, Juan.');
-  });
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
 
-  test('Muestra advertencia si hay campos vacíos', () => {
-    document.getElementById('name').value = '';
-    document.getElementById('email').value = '';
+    console.log('Formulario enviado 🚀');
+    console.log('Nombre:', name);
+    console.log('Correo:', email);
 
-    document.getElementById('registerForm')
-      .dispatchEvent(new Event('submit', { bubbles: true }));
-
-    expect(document.getElementById('message').textContent)
-      .toBe('Por favor llena todos los campos.');
+    if (name && email) {
+      const mensaje = `Gracias por registrarte, ${name}.`;
+      document.getElementById('message').textContent = mensaje;
+      console.log('✅ Registro exitoso:', mensaje);
+    } else {
+      const advertencia = 'Por favor llena todos los campos.';
+      document.getElementById('message').textContent = advertencia;
+      console.warn('⚠️ Formulario incompleto:', advertencia);
+    }
   });
 });
