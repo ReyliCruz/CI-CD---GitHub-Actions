@@ -1,18 +1,20 @@
-# CI-CD---GitHub-Actions
-
 # Informe de Despliegue
 
 ## Descripción
-La aplicación consiste en un formulario de registro simple implementado con HTML, CSS y JavaScript puro. Se configura una pipeline de CI/CD con GitHub Actions.
+Se desarrolló una aplicación web con HTML, CSS y JavaScript que permite registrar nombre y correo de un usuario.
 
 ## CI/CD
-- **CI:** Corre pruebas unitarias en cada push a la rama `main`.
-- **CD:** Despliegue automático en GitHub Pages.
+Se configuró un flujo de trabajo (`ci-cd.yml`) con GitHub Actions para ejecutar pruebas unitarias con Jest y, si pasan, desplegar automáticamente a GitHub Pages.
+
+## Despliegue en la nube
+El sitio se hospeda en GitHub Pages y se actualiza con cada `push` a `main`.
+
+## Monitoreo
+Se utilizan mensajes de `console.log()` en el navegador para verificar eventos clave como envío de formulario. En una versión futura podría integrarse Sentry para monitoreo más robusto.
+
+## URL del Sitio Web
+[https://reylicruz.github.io/CI-CD---GitHub-Actions/](https://reylicruz.github.io/CI-CD---GitHub-Actions/)
 
 ## Problemas encontrados
-- Tuve que configurar correctamente los permisos del token para permitir deploy.
-- Se requería un archivo `package.json` con Jest y jsdom para pruebas.
-
-## Monitoreo y Logging
-Para esta aplicación estática, el monitoreo se limitará a errores de consola en el navegador.
-En una versión futura se puede usar Sentry o LogRocket.
+- Fue necesario configurar `jest-environment-jsdom` ya que Jest 28+ no lo incluye por defecto.
+- Se tuvieron que ajustar los permisos de GitHub Actions para permitir `push` a `gh-pages`.
