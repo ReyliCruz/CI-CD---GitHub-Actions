@@ -1,23 +1,37 @@
-document.addEventListener('DOMContentLoaded', function () {
-  const form = document.getElementById('registerForm');
-  if (!form) return;
+describe('Formulario de Registro', () => {
+  beforeEach(() => {
+    document.body.innerHTML = `
+      <form id="registerForm">
+        <input type="text" id="name" />
+        <input type="email" id="email" />
+        <button type="submit">Registrarse</button>
+        <p id="message"></p>
+      </form>
+    `;
 
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
+    require('../script.js');
+    document.dispatchEvent(new Event('DOMContentLoaded'));
+  });
 
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
+  test('Muestra mensaje de éxito si se llenan todos los campos', () => {
+    document.getElementById('name').value = 'Juan';
+    document.getElementById('email').value = 'juan@example.com';
 
-    console.log("Formulario enviado");
-    console.log("Nombre:", name);
-    console.log("Correo:", email);
+    document.getElementById('registerForm')
+      .dispatchEvent(new Event('submit', { bubbles: true }));
 
-    if (name && email) {
-      document.getElementById('message').textContent = `Gracias por registrarte, ${name}.`;
-      console.log("Registro exitoso");
-    } else {
-      document.getElementById('message').textContent = 'Por favor llena todos los campos.';
-      console.warn("Formulario incompleto");
-    }
+    expect(document.getElementById('message').textContent)
+      .toBe('Gracias por registrarte, Juan.');
+  });
+
+  test('Muestra advertencia si hay campos vacíos', () => {
+    document.getElementById('name').value = '';
+    document.getElementById('email').value = '';
+
+    document.getElementById('registerForm')
+      .dispatchEvent(new Event('submit', { bubbles: true }));
+
+    expect(document.getElementById('message').textContent)
+      .toBe('Por favor llena todos los campos.');
   });
 });
